@@ -7,9 +7,6 @@ class Webscrapper
 
 	def initialize
 		@pagina = $stdin.gets.chomp
-		if @pagina.include?('https')
-			@pagina = @pagina.sub('https','http')
-		end
 		@feedback = open(@pagina)
 		@html = @feedback.read
 		@documento = Nokogiri::HTML(@html)
@@ -38,9 +35,6 @@ class Webscrapper
 			begin
 				puts link
 				if link.include?('.css')
-					if link.include?('https')
-						link = link.sub('https','http')
-					end
 					directory = get_directory(link)
 					FileUtils::mkdir_p "#{@nombre}/#{directory}"
 					if link.include?('https')||link.include?('http')
@@ -66,9 +60,6 @@ class Webscrapper
 			begin
 				puts link
 				if link.include?('.js')
-					if link.include?('https')
-						link = link.sub('https','http')
-					end
 					directory = get_directory(link)
 					FileUtils::mkdir_p "#{@nombre}/#{directory}"
 					if link.include?('https')||link.include?('http')
@@ -93,9 +84,6 @@ class Webscrapper
 		links.each do |link|
 			begin
 				puts link
-				if link.include?('https')
-					link = link.sub('https', 'http')
-				end
 				directory = get_directory(link)
 				FileUtils::mkdir_p "#{@nombre}/#{directory}"
 				if link.include?('https')||link.include?('http')
