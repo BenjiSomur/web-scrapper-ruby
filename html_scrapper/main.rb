@@ -23,14 +23,14 @@ class Webscrapper
 	end
 
 	def get_html
-		@documento.css('link').each do |link|
-			if link.attributes['href'].value[0]=='/'
-				link.attributes['href'].value = ".#{link.attributes['href'].value}"
-			end
-		end
 		@documento.css('script').each do |link|
 			if link.attributes['src'].value[0]=='/'
 				link.attributes['src'].value = ".#{link.attributes['src'].value}"
+			end
+		end
+		@documento.css('link').each do |link|
+			if link.attributes['href'].value[0]=='/'
+				link.attributes['href'].value = ".#{link.attributes['href'].value}"
 			end
 		end
 		file_html = File.new("#{@nombre}/index.html", "w")
