@@ -12,17 +12,27 @@ class Webscrapper
 		@documento = Nokogiri::HTML(@html)
 		@nombre = @documento.at_css('title').text
 		FileUtils::mkdir_p @nombre
-		puts 'Descargando contenido...'
-		get_html
 		puts 'Descargando stylesheets...'
 		get_css
 		puts'Descargando js...'
 		get_js
 		puts 'Descargando imagenes...'
 		get_img
+		puts 'Descargando contenido...'
+		get_html
 	end
 
 	def get_html
+		@documento.css('link').each do |link|
+			if link.attributes['href'].value[0]=='/'
+				link.attributes['href'].value = ".#{link.attributes['href'].value}"
+			end
+		end
+		@documento.css('script').each do |link|
+			if link.attributes['src'].value[0]=='/'
+				link.attributes['src'].value = ".#{link.attributes['src'].value}"
+			end
+		end
 		file_html = File.new("#{@nombre}/index.html", "w")
 		file_html.puts(@html)
 		file_html.close
